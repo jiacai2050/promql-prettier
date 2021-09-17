@@ -1,0 +1,8 @@
+go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}
+{__name__="go_goroutines",instance="localhost:9090",job="prometheus"}
+(((metric_name_long)))
+histogram_quantile(0.9, rate(instance_cpu_time_seconds{app="lion", proc="web",job="cluster-manager"}[5m]))
+topk(5, (sum without(env) (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"})))
+sum (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}) without (label)
+sum (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"} + http_request_total{job="apiserver", handler="/api/comments"}) without (label)
+first_long{foo="bar", hello="world"} + second{foo="bar"} + third{foo="bar", localhost="9090"} + forth

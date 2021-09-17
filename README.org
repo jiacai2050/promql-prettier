@@ -1,0 +1,95 @@
+* Demo
+#+begin_src bash :results output example :exports both
+cat promql.txt | while read line
+do
+echo -e "Raw input:\n$line"
+echo -e "Formatted output:"
+echo "$line" | ./promql-prettier
+echo -e "\n"
+done
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Raw input:
+go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}
+Formatted output:
+go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}
+
+Raw input:
+{__name__="go_goroutines",instance="localhost:9090",job="prometheus"}
+Formatted output:
+go_goroutines{instance="localhost:9090", job="prometheus"}
+
+Raw input:
+(((metric_name_long)))
+Formatted output:
+metric_name_long
+
+Raw input:
+histogram_quantile(0.9, rate(instance_cpu_time_seconds{app="lion", proc="web",job="cluster-manager"}[5m]))
+Formatted output:
+histogram_quantile (
+  0.9,
+  rate (
+    instance_cpu_time_seconds{app="lion", proc="web", job="cluster-manager"}[5m:]
+  )
+)
+
+Raw input:
+topk(5, (sum without(env) (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"})))
+Formatted output:
+topk (
+  5,
+  sum without (env) (
+    instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}
+  )
+)
+
+Raw input:
+sum (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}) without (label)
+Formatted output:
+sum without (label) (
+  instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}
+)
+
+Raw input:
+sum (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"} + http_request_total{job="apiserver", handler="/api/comments"}) without (label)
+Formatted output:
+sum without (label) (
+    instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}
+  +
+    http_request_total{job="apiserver", handler="/api/comments"}
+)
+
+Raw input:
+first_long{foo="bar", hello="world"} + second{foo="bar"} + third{foo="bar", localhost="9090"} + forth
+Formatted output:
+  (
+      (
+          first_long{foo="bar", hello="world"}
+        +
+          second{foo="bar"}
+      )
+    +
+      third{foo="bar", localhost="9090"}
+  )
++
+  forth
+
+#+end_example
+
+* Install
+Go to [[https://github.com/jiacai2050/promql-prettier/releases][releases]] to download the latest binary, and put it in your PATH.
+
+* Editor integration
+** Emacs
+#+BEGIN_SRC emacs-lisp
+(defun my/promql-fmt (s e)
+  (interactive "r")
+  (shell-command-on-region s e "promql-prettier"
+						   :replace t))
+#+END_SRC
+
+* Reference
+- [[https://docs.google.com/document/d/1nOBjpuCk4CsrOSm2ZjfVz2EL6gmA_CFGSbHCdY0Royg/edit#heading=h.yvhtbjuned2s][PromQL prettier - design doc]]

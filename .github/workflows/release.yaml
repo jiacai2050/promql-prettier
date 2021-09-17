@@ -1,0 +1,30 @@
+on:
+  release:
+    types: [created]
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # build and publish in parallel: linux/386, linux/amd64, windows/386, windows/amd64, darwin/amd64
+        goos: [linux, windows, darwin]
+        goarch: ["386", amd64]
+        exclude:
+          - goarch: "386"
+            goos: darwin
+    steps:
+    - uses: actions/checkout@v2
+    - name: 'Set Args'
+      run: |
+        echo "BUILD_TIME=$(date '+%Y-%m-%d_%H:%M:%S')" >> $GITHUB_ENV
+        echo "GIT_VERSION=$(git rev-parse --short HEAD)" $GITHUB_ENV
+        echo "GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" $GITHUB_ENV
+    - uses: wangyoucao577/go-release-action@v1.20
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        ldflags: "-X main.BuildBranch=${{ env.GIT_BRANCH }} -X main.BuildVersion=${{ env.GIT_VERSION }} -X main.BuildTime=${{ env.BUILD_TIME }}"
+        binary_name: "promql-prettier"
