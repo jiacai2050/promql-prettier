@@ -1,20 +1,11 @@
 * PromQL Prettier
-Have trouble in reading PromQL written by your colleague or SRE team?
+Have trouble in reading [[https://prometheus.io/docs/prometheus/latest/querying/basics/][PromQL]] written by your colleagues or SRE team?
 
 =promql-prettier= to the rescue!
 
 * Install
 - Thanks for [[https://github.com/golang/go/wiki/WebAssembly][WebAssembly]], you can use it [[https://liujiacai.net/promql-prettier/][online]].
 - Or you can download in [[https://github.com/jiacai2050/promql-prettier/releases][releases]] and integrate with your favorite editors.
-
-* Editor integration
-** Emacs
-#+BEGIN_SRC emacs-lisp
-(defun my/promql-fmt (s e)
-  (interactive "r")
-  (shell-command-on-region s e "promql-prettier"
-                           :replace t))
-#+END_SRC
 
 * Examples
 #+begin_src bash :results output example :exports results
@@ -95,6 +86,15 @@ Pretty print:
   forth
 
 #+end_example
+
+* Editor integration
+** Emacs
+#+BEGIN_SRC emacs-lisp
+(defun my/promql-fmt (s e)
+  (interactive "r")
+  (shell-command-on-region s e "promql-prettier"
+                           :replace t))
+#+END_SRC
 
 * Reference
 - [[https://docs.google.com/document/d/1nOBjpuCk4CsrOSm2ZjfVz2EL6gmA_CFGSbHCdY0Royg/edit#heading=h.yvhtbjuned2s][PromQL prettier - design doc]]
