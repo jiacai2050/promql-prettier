@@ -1,19 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"syscall/js"
 
 	"github.com/VictoriaMetrics/metricsql"
 )
 
-var c chan struct{}
+var (
+	blockingCh chan struct{}
+)
 
 func init() {
-	c = make(chan struct{})
+	blockingCh = make(chan struct{})
 }
-
-var cb js.Func
 
 func main() {
 	g := js.Global()
@@ -21,9 +20,14 @@ func main() {
 
 	input := doc.Call("getElementById", "input")
 	output := doc.Call("getElementById", "output")
-	cb = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+
+	prettier := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		promql := input.Get("value").String()
-		fmt.Println("input is %s", promql)
+		// fmt.Printf(promql)
+		if promql == "" {
+			promql = input.Get("placeholder").String()
+		}
+
 		expr, err := metricsql.Parse(promql)
 		if err != nil {
 			g.Call("alert", err.Error())
@@ -35,8 +39,7 @@ func main() {
 		return nil
 	})
 
-	doc.Call("getElementById", "prettierBtn").Call("addEventListener", "click", cb)
+	doc.Call("getElementById", "prettierBtn").Call("addEventListener", "click", prettier)
 
-	<-c
-	fmt.Println("WebAssembly App Finish!")
+	<-blockingCh
 }

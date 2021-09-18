@@ -1,34 +1,36 @@
-* Demo
-#+begin_src bash :results output example :exports both
-cat promql.txt | while read line
+* PromQL Prettier
+Have trouble in reading PromQL written by your colleague or SRE team?
+
+=promql-prettier= to the rescue!
+#+begin_src bash :results output example :exports results
+cat ./docs/promql.txt | while read line
 do
-echo -e "Raw input:\n$line"
-echo -e "Formatted output:"
-echo "$line" | ./promql-prettier
+echo -e "Original:\n${line}\nPretty print:"
+echo "$line" | promql-prettier
 echo -e "\n"
 done
 #+end_src
 
 #+RESULTS:
 #+begin_example
-Raw input:
+Original:
 go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}
-Formatted output:
+Pretty print:
 go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}
 
-Raw input:
+Original:
 {__name__="go_goroutines",instance="localhost:9090",job="prometheus"}
-Formatted output:
+Pretty print:
 go_goroutines{instance="localhost:9090", job="prometheus"}
 
-Raw input:
+Original:
 (((metric_name_long)))
-Formatted output:
+Pretty print:
 metric_name_long
 
-Raw input:
+Original:
 histogram_quantile(0.9, rate(instance_cpu_time_seconds{app="lion", proc="web",job="cluster-manager"}[5m]))
-Formatted output:
+Pretty print:
 histogram_quantile (
   0.9,
   rate (
@@ -36,9 +38,9 @@ histogram_quantile (
   )
 )
 
-Raw input:
+Original:
 topk(5, (sum without(env) (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"})))
-Formatted output:
+Pretty print:
 topk (
   5,
   sum without (env) (
@@ -46,25 +48,25 @@ topk (
   )
 )
 
-Raw input:
+Original:
 sum (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}) without (label)
-Formatted output:
+Pretty print:
 sum without (label) (
   instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}
 )
 
-Raw input:
+Original:
 sum (instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"} + http_request_total{job="apiserver", handler="/api/comments"}) without (label)
-Formatted output:
+Pretty print:
 sum without (label) (
     instance_cpu_time_ns{app="lion", proc="web", rev="34d0f99", env="prod", job="cluster-manager"}
   +
     http_request_total{job="apiserver", handler="/api/comments"}
 )
 
-Raw input:
+Original:
 first_long{foo="bar", hello="world"} + second{foo="bar"} + third{foo="bar", localhost="9090"} + forth
-Formatted output:
+Pretty print:
   (
       (
           first_long{foo="bar", hello="world"}
