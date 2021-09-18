@@ -4,7 +4,7 @@ Have trouble in reading [[https://prometheus.io/docs/prometheus/latest/querying/
 =promql-prettier= to the rescue!
 
 * Install
-- Thanks for [[https://github.com/golang/go/wiki/WebAssembly][WebAssembly]], you can use it [[https://liujiacai.net/promql-prettier/][online]].
+- Thanks for [[https://github.com/golang/go/wiki/WebAssembly][WebAssembly]], you can use it [[https://liujiacai.net/promql-prettier/][online]]. 🍺
 - Or you can download in [[https://github.com/jiacai2050/promql-prettier/releases][releases]] and integrate with your favorite editors.
 
 * Examples
