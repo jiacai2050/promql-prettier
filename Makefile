@@ -11,7 +11,7 @@ clean:
 	rm $(TARGET)
 
 build-wasm:
-	GOOS=js GOARCH=wasm go build -o web/main.wasm
+	GOOS=js GOARCH=wasm go build -o docs/main.wasm
 
 serve-wasm:
-	cd web; python3 -m http.server
+	cd docs; python3 -m http.server
