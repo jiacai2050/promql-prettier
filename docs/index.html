@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="wasm_exec.js"></script>
+	<script>
+	  const go = new Go();
+	  WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+		go.run(result.instance);
+	  });
+
+      function copy() {
+        document.getElementById("output").select();
+        document.execCommand('copy');
+
+        const info = document.getElementById("info");
+        info.style.display = 'inline';
+        setTimeout(function() {
+          info.style.display = 'none';
+        }, 1000);
+      }
+	</script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>PromQL Prettier</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="mb-3">
+        <label for="input" class="form-label"><h3><a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">PromQL</a> Prettier</h3></label>
+        <textarea id="input" class="form-control" placeholder="topk(5, (sum without(ldc, hostname) (http_requests)))"></textarea>
+        <button id="prettierBtn" type="button" class="btn btn-outline-primary">Format 🎨</button>
+      </div>
+      <div class="mb-3">
+        <textarea readonly style="height:400px" id="output" class="form-control"></textarea>
+        <button id="copyBtn" onclick="copy()" type="button" class="btn btn-outline-primary">Copy</button>
+        <div id="info" style="display:none">Copied 👍</div>
+      </div>
+      <div class="mb-3 text-center">
+        <a class="btn btn-primary" href="https://github.com/jiacai2050/promql-prettier" role="button">Fork me on GitHub</a>
+      </div>
+    </div>
+  </body>
+</html>
