@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<script src="wasm_exec.js"></script>
+		<script>
+			const go = new Go();
+			WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+				go.run(result.instance);
+			});
+		</script>
+        <style>
+          textarea {
+  width: 400px;
+  height: 550px;
+}
+          </style>
+	</head>
+	<body>
+      <textarea id="input"></textarea>
+      <button id="prettierBtn" >Format it -->></button>
+      <textarea id="output"></textarea>
+      <button id="copyBtn" >Copy</button>
+    </body>
+</html>
