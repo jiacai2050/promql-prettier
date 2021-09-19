@@ -13,5 +13,5 @@ clean:
 build-wasm:
 	GOOS=js GOARCH=wasm go build -o docs/main.wasm
 
-serve-wasm:
+serve:
 	cd docs; python3 -m http.server
