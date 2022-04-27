@@ -96,3 +96,8 @@ Pretty print:
 
 * Reference
 - [[https://docs.google.com/document/d/1nOBjpuCk4CsrOSm2ZjfVz2EL6gmA_CFGSbHCdY0Royg/edit#heading=h.yvhtbjuned2s][PromQL prettier - design doc]]
+
+* LICENSE
+Copyright (c) 2022 Jiacai Liu <jiacai2050@gmail.com>
+
+PromQL Prettier is distributed under [[https://www.gnu.org/licenses/gpl-3.0.txt][GPL-3.0]] license.
