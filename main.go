@@ -13,8 +13,8 @@ import (
 )
 
 var (
-	flVersion = flag.Bool("version", false, "print version")
-	flDebug   = flag.Bool("debug", false, "enable debug")
+	flVersion    = flag.Bool("version", false, "print version")
+	flDebug      = flag.Bool("debug", false, "enable debug")
 
 	BuildTime    string
 	BuildBranch  string

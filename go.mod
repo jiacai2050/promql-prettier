@@ -1,9 +1,11 @@
 module promql-prettier
 
-go 1.16
+go 1.17
+
+require github.com/VictoriaMetrics/metricsql v0.44.1
 
 require (
-	github.com/VictoriaMetrics/metricsql v0.2.3
+	github.com/VictoriaMetrics/metrics v1.18.1 // indirect
+	github.com/valyala/fastrand v1.1.0 // indirect
+	github.com/valyala/histogram v1.2.0 // indirect
 )
-
-replace github.com/VictoriaMetrics/metricsql => github.com/jiacai2050/metricsql v0.2.4-0.20201117063355-2ca2689db947
