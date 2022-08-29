@@ -45,7 +45,10 @@ func main() {
 		panic(err)
 	}
 
-	formatted := Prettier(string(promql))
+	formatted, err := Prettier(string(promql))
+	if err != nil {
+		panic(err)
+	}
 
 	fmt.Printf("%s", formatted)
 }

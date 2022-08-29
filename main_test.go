@@ -48,9 +48,12 @@ func TestFormatting(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got := main.Prettier(test.input)
+		got, err := main.Prettier(test.input)
 		want := test.want
 
+		if err != nil {
+			t.Errorf("got %q, want %q", err, want)
+		}
 		if got != want {
 			t.Errorf("got %q, want %q", got, want)
 		}
