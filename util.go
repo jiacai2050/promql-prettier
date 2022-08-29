@@ -116,11 +116,11 @@ func prettier(expr metricsql.Expr, ident int) []byte {
 	return buf
 }
 
-func FormatString(s string) string {
+func Prettier(s string) (string, error) {
 	expr, err := metricsql.Parse(s)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
-	return string(prettier(expr, 0))
+	return string(prettier(expr, 0)), nil
 }

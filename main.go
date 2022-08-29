@@ -13,8 +13,8 @@ import (
 )
 
 var (
-	flVersion    = flag.Bool("version", false, "print version")
-	flDebug      = flag.Bool("debug", false, "enable debug")
+	flVersion = flag.Bool("version", false, "print version")
+	flDebug   = flag.Bool("debug", false, "enable debug")
 
 	BuildTime    string
 	BuildBranch  string
@@ -45,8 +45,7 @@ func main() {
 		panic(err)
 	}
 
-	formatted := FormatString(string(promql))
+	formatted := Prettier(string(promql))
 
 	fmt.Printf("%s", formatted)
-
 }

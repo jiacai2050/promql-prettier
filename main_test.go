@@ -7,12 +7,10 @@ import (
 )
 
 func TestFormatting(t *testing.T) {
-	type gotWant struct {
+	tests := []struct {
 		input string
 		want  string
-	}
-
-	tests := []gotWant{
+	}{
 		{input: `go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}`, want: `go_goroutines{instance!="localhost:9090", job!~"prometheus.*"}`},
 		{input: `{__name__="go_goroutines",instance="localhost:9090",job="prometheus"}`, want: `go_goroutines{instance="localhost:9090", job="prometheus"}`},
 		{input: "(((metric_name_long)))", want: "metric_name_long"},
@@ -50,7 +48,7 @@ func TestFormatting(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got := main.FormatString(test.input)
+		got := main.Prettier(test.input)
 		want := test.want
 
 		if got != want {
