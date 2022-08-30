@@ -10,8 +10,6 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 	"os"
-
-	"github.com/VictoriaMetrics/metricsql"
 )
 
 var (
@@ -25,7 +23,7 @@ var (
 
 const version = "0.1.0"
 
-func init() {
+func main() {
 	flag.Parse()
 	if *flVersion {
 		log.Printf("PromQL Prettier %s\nGit branch: %s\nGit commit: %s\nBuild: %s\n",
@@ -41,20 +39,16 @@ func init() {
 			}
 		}()
 	}
-}
 
-func main() {
 	promql, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		panic(err)
 	}
 
-	expr, err := metricsql.Parse(string(promql))
+	formatted, err := Prettier(string(promql))
 	if err != nil {
 		panic(err)
 	}
 
-	ret := prettier(expr, 0)
-	fmt.Printf("%s", ret)
-
+	fmt.Printf("%s", formatted)
 }
