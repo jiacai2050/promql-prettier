@@ -46,11 +46,12 @@ func prettier(expr metricsql.Expr, ident int) []byte {
 		var b bytes.Buffer
 
 		wrapParensWhenNecesary(e.Expr, &b, ident)
-		if len(e.Window) > 0 || len(e.Step) > 0 {
-			b.WriteString(fmt.Sprintf("[%s:%s]", e.Window, e.Step))
+		if (*e.Window).Duration(1) > 0 || e.Step.Duration(1) > 0 {
+			// hack: cannot access `DurationExpr.s` directly, but can get it by appending empty bytes to `DurationExpr`
+			b.WriteString(fmt.Sprintf("[%s:%s]", e.Window.AppendString([]byte{}), e.Step.AppendString([]byte{})))
 		}
-		if len(e.Offset) > 0 {
-			b.WriteString(fmt.Sprintf(" offset %s", e.Offset))
+		if e.Offset.Duration(1) > 0 {
+			b.WriteString(fmt.Sprintf(" offset %s", e.Offset.AppendString([]byte{})))
 		}
 
 		buf = append(buf, b.Bytes()...)
