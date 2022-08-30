@@ -1,3 +1,5 @@
+[[https://github.com/jiacai2050/promql-prettier/actions/workflows/CI.yaml][https://github.com/jiacai2050/promql-prettier/actions/workflows/CI.yaml/badge.svg]]
+
 * PromQL Prettier
 Have trouble in reading [[https://prometheus.io/docs/prometheus/latest/querying/basics/][PromQL]] written by your colleagues or SRE team? =promql-prettier= to the rescue!
 

@@ -15,3 +15,6 @@ build-wasm:
 
 serve:
 	cd docs; python3 -m http.server
+
+test:
+	go test -v ./...

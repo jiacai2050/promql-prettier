@@ -6,7 +6,7 @@ import (
 	main "promql-prettier"
 )
 
-func TestFormatting(t *testing.T) {
+func TestPrettier(t *testing.T) {
 	tests := []struct {
 		input string
 		want  string
